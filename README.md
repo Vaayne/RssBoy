@@ -1,3 +1,8 @@
+
+# Note
+
+由于 [wechat-feeds](https://github.com/hellodword/wechat-feeds) Archived, 故订阅微信公众号暂不可用，不过仍然可以继续订阅其它的 RSS
+
 # flowerss bot
 
 [![Build Status](https://github.com/indes/flowerss-bot/workflows/Release/badge.svg)](https://github.com/indes/flowerss-bot/actions?query=workflow%3ARelease)
