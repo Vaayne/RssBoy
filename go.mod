@@ -28,7 +28,7 @@ require (
 	golang.org/x/sys v0.0.0-20201211090839-8ad439b19e0f // indirect
 	golang.org/x/text v0.3.4 // indirect
 	gopkg.in/ini.v1 v1.62.0 // indirect
-	gopkg.in/tucnak/telebot.v2 v2.3.5
+	gopkg.in/tucnak/telebot.v2 v2.4.0
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	moul.io/zapgorm v1.1.2
 )
