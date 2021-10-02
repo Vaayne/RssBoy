@@ -1,10 +1,10 @@
 package tgraph
 
 import (
-	"go.uber.org/zap"
+	"github.com/indes/flowerss-bot/internal/config"
 
-	"github.com/indes/flowerss-bot/config"
 	"github.com/indes/telegraph-go"
+	"go.uber.org/zap"
 )
 
 const (

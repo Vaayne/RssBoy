@@ -3,12 +3,13 @@ package model
 import (
 	"strings"
 
+	"github.com/indes/flowerss-bot/internal/config"
+	"github.com/indes/flowerss-bot/internal/tgraph"
+	
 	"github.com/SlyMarbo/rss"
-	"github.com/indes/flowerss-bot/config"
-	"github.com/indes/flowerss-bot/tgraph"
 )
 
-// Content feed content
+// Content fetcher content
 type Content struct {
 	SourceID     uint
 	HashID       string `gorm:"primary_key"`
@@ -48,7 +49,7 @@ func getContentByFeedItem(source *Source, item *rss.Item) (Content, error) {
 	return c, nil
 }
 
-// GenContentAndCheckByFeedItem generate content by feed item
+// GenContentAndCheckByFeedItem generate content by fetcher item
 func GenContentAndCheckByFeedItem(s *Source, item *rss.Item) (*Content, bool, error) {
 	var (
 		content   Content

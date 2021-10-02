@@ -3,9 +3,10 @@ package bot
 import (
 	"time"
 
-	"github.com/indes/flowerss-bot/bot/fsm"
-	"github.com/indes/flowerss-bot/config"
-	"github.com/indes/flowerss-bot/util"
+	"github.com/indes/flowerss-bot/internal/bot/fsm"
+	"github.com/indes/flowerss-bot/internal/config"
+	"github.com/indes/flowerss-bot/internal/util"
+	
 	"go.uber.org/zap"
 	tb "gopkg.in/tucnak/telebot.v2"
 )
