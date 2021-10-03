@@ -39,3 +39,19 @@
 /help 帮助
 ```
 详细使用方法请查阅项目[使用文档](https://flowerss-bot.now.sh/#/usage)。 
+
+# Download PT
+
+support subscribe RSS of PT site, and download it.
+
+## Steps
+
+1. subscribe RSS of PT site
+2. edit config.yml
+   1. set transmission
+   2. set pt_downlaod_dir
+   3. set support pt_sites
+
+### Note:
+    
+- only site in pt_sites are supported

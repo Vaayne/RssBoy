@@ -27,3 +27,19 @@ sqlite:
   path: ./data.db
 
 allowed_users:
+
+
+transmission:
+  host:
+  port:
+  https:
+  user:
+  pass:
+
+pt_downlaod_dir:
+  default:
+  movie:
+  tv:
+
+pt_sites:
+  # site: passkey

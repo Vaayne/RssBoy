@@ -127,6 +127,10 @@ func BroadcastNews(source *model.Source, subs []*model.Subscribe, contents []*mo
 				ParseMode:             config.MessageMode,
 				DisableNotification:   sub.EnableNotification != 1,
 			}
+			// if it is an PTsite RSS, try to add download link to it
+			if shouldParseAsPTSite(content.RawLink) {
+				o.ReplyMarkup = buildReplyMarkupForPTSite(content.RawLink)
+			}
 			msg, err := tpldata.Render(config.MessageMode)
 			if err != nil {
 				zap.S().Errorw("broadcast news error, tpldata.Render err",

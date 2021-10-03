@@ -146,6 +146,46 @@ func init() {
 	if viper.IsSet("log.db_log") {
 		DBLogMode = viper.GetBool("log.db_log")
 	}
+
+	if viper.IsSet("transmission.host") {
+		Transmission = TransmissionConfig{
+			Host:  viper.GetString("transmission.host"),
+			Port:  9091,
+			Https: false,
+			User:  viper.GetString("transmission.user"),
+			Pass:  viper.GetString("transmission.pass"),
+		}
+
+		https := viper.GetBool("transmission.https")
+		if https {
+			Transmission.Https = true
+		}
+		port := viper.GetInt32("transmission.port")
+		if port != 0 {
+			Transmission.Port = port
+		}
+	}
+
+	if viper.IsSet("pt_downlaod_dir") {
+		PTDownloadDir = PTDownloadDirConfig{
+			Default: viper.GetString("pt_downlaod_dir.default"),
+			Movie:   viper.GetString("pt_downlaod_dir.default"),
+			TV:      viper.GetString("pt_downlaod_dir.default"),
+		}
+		if viper.IsSet("pt_downlaod_dir.movie") {
+			PTDownloadDir.Movie = viper.GetString("pt_downlaod_dir.movie")
+		}
+
+		if viper.IsSet("pt_downlaod_dir.tv") {
+			PTDownloadDir.TV = viper.GetString("pt_downlaod_dir.tv")
+		}
+	}
+
+	if viper.IsSet("pt_sites") {
+		for site, passkey := range viper.GetStringMapString("pt_sites") {
+			PTSites[site] = passkey
+		}
+	}
 }
 
 func (t TplData) Render(mode tb.ParseMode) (string, error) {

@@ -58,6 +58,16 @@ var (
 
 	// DBLogMode 是否打印数据库日志
 	DBLogMode bool = false
+
+	// Transmission Transmission 配置
+	Transmission       TransmissionConfig
+	EnableTransmission bool = false
+
+	// PTDownloadDir PTDownloadDirConfig 下载目录
+	PTDownloadDir PTDownloadDirConfig
+
+	// PTSites 支持的 PT 站点
+	PTSites map[string]string = map[string]string{}
 )
 
 const (
@@ -113,6 +123,20 @@ type TplData struct {
 	TelegraphURL    string
 	Tags            string
 	EnableTelegraph bool
+}
+
+type TransmissionConfig struct {
+	Host  string
+	Port  int32
+	Https bool
+	User  string
+	Pass  string
+}
+
+type PTDownloadDirConfig struct {
+	Default string
+	Movie   string
+	TV      string
 }
 
 func AppVersionInfo() (s string) {
