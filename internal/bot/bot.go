@@ -6,7 +6,7 @@ import (
 	"github.com/indes/flowerss-bot/internal/bot/fsm"
 	"github.com/indes/flowerss-bot/internal/config"
 	"github.com/indes/flowerss-bot/internal/util"
-	
+
 	"go.uber.org/zap"
 	tb "gopkg.in/tucnak/telebot.v2"
 )
@@ -113,6 +113,12 @@ func setHandle() {
 	B.Handle(&tb.InlineButton{Unique: "unsub_all_cancel_btn"}, unsubAllCancelBtnCtr)
 
 	B.Handle(&tb.InlineButton{Unique: "unsub_feed_item_btn"}, unsubFeedItemBtnCtr)
+
+	B.Handle(&tb.InlineButton{Unique: "download_to_movies"}, downloadToMoviesCtr)
+
+	B.Handle(&tb.InlineButton{Unique: "download_to_tvs"}, downloadToTVsCtr)
+
+	B.Handle(&tb.InlineButton{Unique: "download"}, downloadCtr)
 
 	B.Handle("/start", startCmdCtr)
 
