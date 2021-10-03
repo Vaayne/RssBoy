@@ -59,7 +59,7 @@ func checkVersion() {
 
 // AddTorrent AddTorrent to remote transmission rpc
 func AddTorrent(url, downloadDir string) (*transmissionrpc.Torrent, error) {
-	paused := true
+	paused := !config.Transmission.AutoStart
 	torrent, err := client.TorrentAdd(
 		&transmissionrpc.TorrentAddPayload{
 			DownloadDir: &downloadDir,
@@ -84,4 +84,12 @@ func AddTorrent(url, downloadDir string) (*transmissionrpc.Torrent, error) {
 		"ID", torrent.ID,
 	)
 	return torrent, nil
+}
+
+func GetTorrent(fields []string, id int64) (*transmissionrpc.Torrent, error) {
+	torrents, err := client.TorrentGet(fields, []int64{id})
+	if err != nil {
+		return nil, err
+	}
+	return torrents[0], nil
 }

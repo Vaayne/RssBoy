@@ -8,7 +8,6 @@ import (
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
-
 type RunType string
 
 var (
@@ -126,11 +125,12 @@ type TplData struct {
 }
 
 type TransmissionConfig struct {
-	Host  string
-	Port  int32
-	Https bool
-	User  string
-	Pass  string
+	Host      string
+	Port      int32
+	Https     bool
+	User      string
+	Pass      string
+	AutoStart bool
 }
 
 type PTDownloadDirConfig struct {
