@@ -3,7 +3,6 @@ package bot
 import (
 	"fmt"
 	"net/url"
-	"strings"
 
 	"github.com/indes/flowerss-bot/internal/config"
 	"github.com/indes/flowerss-bot/internal/transmission"
@@ -29,17 +28,31 @@ func downloadBT(c *tb.Callback, downloadDir string) {
 		downloadDir,
 	)
 	if err != nil {
-		_, _ = B.Send(c.Message.Chat, fmt.Sprintf("Add torrent Error\n\nError Message:\n%#v", err), &tb.SendOptions{
+		_, _ = B.Send(c.Message.Chat, fmt.Sprintf("Download torrent Error\nError Message:\n%#v", err), &tb.SendOptions{
 			DisableWebPagePreview: true,
 			ParseMode:             tb.ModeMarkdown,
 		})
 		return
 	}
 
-	_, _ = B.Send(c.Message.Chat, fmt.Sprintf("Add torrent Success\n\n*Torrent Name:*\n%s", *torrent.Name), &tb.SendOptions{
-		DisableWebPagePreview: true,
-		ParseMode:             tb.ModeMarkdown,
-	})
+	t, err := transmission.GetTorrent([]string{"id", "name", "totalSize", "downloadDir", "status"}, *torrent.ID)
+
+	if err != nil {
+		_, _ = B.Send(c.Message.Chat, fmt.Sprintf("Get torrent Error\nError Message:\n%#v", err), &tb.SendOptions{
+			DisableWebPagePreview: true,
+			ParseMode:             tb.ModeMarkdown,
+		})
+		return
+	}
+
+	msg := "Download torrent Success:\n- *ID:* %d\n- *Name:* %s\n- *DownloadDir:* %s\n- *TotalSize:* %f GB\n- *Status:* %s"
+	_, _ = B.Send(
+		c.Message.Chat,
+		fmt.Sprintf(msg, *t.ID, *t.Name, *t.DownloadDir, t.TotalSize.GB(), t.Status.String()),
+		&tb.SendOptions{
+			DisableWebPagePreview: true,
+			ParseMode:             tb.ModeMarkdown,
+		})
 }
 
 func getTorrentDownloadUrl(urlStr string) string {
@@ -52,15 +65,61 @@ func getTorrentDownloadUrl(urlStr string) string {
 		)
 		return urlStr
 	}
+
 	// TODO for now only support download use passkey, will support more in the future
-	// check passkey
-	if strings.Contains(urlStr, "passkey") {
+	// build download url
+	id := u.Query().Get("id")
+
+	// if there is not id, it is an invalid url, just return
+	if id == "" {
+		zap.S().Errorw(
+			"Invalid downlaod url",
+			"url", urlStr,
+		)
 		return urlStr
 	}
 
-	// set passkey
-	passkey := config.PTSites[u.Host]
-	return urlStr + "&passkey=" + passkey
+	passkey := u.Query().Get("passkey")
+
+	// if is download.php and contains id and passkey
+	// it is a downlaod url, just return
+	if u.Path == "/download.php" {
+		if passkey != "" {
+			zap.S().Infow(
+				"Use the download url",
+				"url", urlStr,
+			)
+			return urlStr
+		}
+	}
+
+	passkey = config.PTSites[u.Host]
+
+	if passkey == "" {
+		zap.S().Errorw(
+			"There is no valid passkey, can not download",
+			"url", urlStr,
+		)
+		return urlStr
+	}
+
+	// build new download url
+	params := url.Values{
+		"id":      []string{id},
+		"passkey": []string{passkey},
+	}
+	newURL := &url.URL{
+		Scheme:   u.Scheme,
+		Host:     u.Host,
+		Path:     "/download.php",
+		RawQuery: params.Encode(),
+	}
+	zap.S().Infow(
+		"Parse download url",
+		"old_url", urlStr,
+		"new_url", newURL.String(),
+	)
+	return newURL.String()
 }
 
 func shouldParseAsPTSite(urlStr string) bool {
@@ -82,12 +141,12 @@ func buildReplyMarkupForPTSite(urlStr string) *tb.ReplyMarkup {
 			{
 				{
 					Unique: "download_to_movies",
-					Text:   "Download Movies",
+					Text:   "Movies",
 					Data:   urlStr,
 				},
 				{
 					Unique: "download_to_tvs",
-					Text:   "Download TVs",
+					Text:   "TVs",
 					Data:   urlStr,
 				},
 				{

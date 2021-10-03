@@ -85,3 +85,11 @@ func AddTorrent(url, downloadDir string) (*transmissionrpc.Torrent, error) {
 	)
 	return torrent, nil
 }
+
+func GetTorrent(fields []string, id int64) (*transmissionrpc.Torrent, error) {
+	torrents, err := client.TorrentGet(fields, []int64{id})
+	if err != nil {
+		return nil, err
+	}
+	return torrents[0], nil
+}
