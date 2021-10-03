@@ -84,7 +84,7 @@ func getTorrentDownloadUrl(urlStr string) string {
 	// if is download.php and contains id and passkey
 	// it is a downlaod url, just return
 	if u.Path == "/download.php" {
-		if passkey != "" {
+		if passkey != "" || u.Query().Get("downhash") != "" {
 			zap.S().Infow(
 				"Use the download url",
 				"url", urlStr,
