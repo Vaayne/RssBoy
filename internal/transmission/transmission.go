@@ -59,7 +59,7 @@ func checkVersion() {
 
 // AddTorrent AddTorrent to remote transmission rpc
 func AddTorrent(url, downloadDir string) (*transmissionrpc.Torrent, error) {
-	paused := true
+	paused := !config.Transmission.AutoStart
 	torrent, err := client.TorrentAdd(
 		&transmissionrpc.TorrentAddPayload{
 			DownloadDir: &downloadDir,

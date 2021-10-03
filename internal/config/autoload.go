@@ -149,11 +149,12 @@ func init() {
 
 	if viper.IsSet("transmission.host") {
 		Transmission = TransmissionConfig{
-			Host:  viper.GetString("transmission.host"),
-			Port:  9091,
-			Https: false,
-			User:  viper.GetString("transmission.user"),
-			Pass:  viper.GetString("transmission.pass"),
+			Host:      viper.GetString("transmission.host"),
+			Port:      9091,
+			Https:     false,
+			User:      viper.GetString("transmission.user"),
+			Pass:      viper.GetString("transmission.pass"),
+			AutoStart: false,
 		}
 
 		https := viper.GetBool("transmission.https")
@@ -163,6 +164,11 @@ func init() {
 		port := viper.GetInt32("transmission.port")
 		if port != 0 {
 			Transmission.Port = port
+		}
+
+		autoStart := viper.GetBool("transmission.auto_start")
+		if autoStart {
+			Transmission.AutoStart = true
 		}
 	}
 

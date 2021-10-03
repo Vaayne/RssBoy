@@ -35,6 +35,7 @@ transmission:
   https:
   user:
   pass:
+  auto_start:
 
 pt_downlaod_dir:
   default:
