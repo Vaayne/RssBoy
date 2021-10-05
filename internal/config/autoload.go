@@ -192,6 +192,24 @@ func init() {
 			PTSites[site] = passkey
 		}
 	}
+
+	if viper.IsSet("nsq.nsqd.host") && viper.IsSet("nsq.nsqlookupd.host") {
+		EnableNSQ = true
+		NSQ.NSQd = NSQHostConfig{
+			Host: viper.GetString("nsq.nsqd.host"),
+			Port: 4150,
+		}
+		NSQ.NSQLookupd = NSQHostConfig{
+			Host: viper.GetString("nsq.nsqlookupd.host"),
+			Port: 4161,
+		}
+		if viper.IsSet("nsq.nsqd.port") {
+			NSQ.NSQd.Port = viper.GetInt32("nsq.nsqd.port")
+		}
+		if viper.IsSet("nsq.nsqlookupd.port") {
+			NSQ.NSQLookupd.Port = viper.GetInt32("nsq.nsqlookupd.port")
+		}
+	}
 }
 
 func (t TplData) Render(mode tb.ParseMode) (string, error) {

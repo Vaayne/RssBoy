@@ -1,20 +1,31 @@
 version: '3.4'
 
 services:
-  flowerss-bot:
+  flowerss:
     build:
-      network: host
       context: .
       dockerfile: Dockerfile
-    image: flowerss-bot
+    image: flowerss
     volumes:
-      - ./conf:/root/.flowerss-bot
+      - ./config.yml:/flowerss/config.yml
+      - ./data/sqlite/data.db:/flowerss/data/sqlite/data.db
     restart: unless-stopped
-    deploy:
-      replicas: 1
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 1g
-      restart_policy:
-        condition: on-failure
+    depends_on:
+      - nsqlookupd
+      - nsqd
+  nsqlookupd:
+    image: nsqio/nsq
+    command: /nsqlookupd
+    ports:
+      - "4160:4160"
+      - "4161:4161"
+  nsqd:
+    image: nsqio/nsq
+    command: /nsqd --lookupd-tcp-address=nsqlookupd:4160 --data-path=/data
+    depends_on:
+      - nsqlookupd
+    volumes:
+      - ./data/nsq:/data
+    ports:
+      - "4150:4150"
+      - "4151:4151"

@@ -25,6 +25,7 @@ func configDB() {
 	db.DB().SetMaxOpenConns(50)
 	db.LogMode(config.DBLogMode)
 	db.SetLogger(zapgorm.New(log.Logger.WithOptions(zap.AddCallerSkip(7))))
+	db.LogMode(true)
 }
 
 func updateTable() {

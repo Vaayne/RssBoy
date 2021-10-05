@@ -7,16 +7,16 @@ import (
 	"github.com/indes/flowerss-bot/internal/bot"
 	"github.com/indes/flowerss-bot/internal/config"
 	"github.com/indes/flowerss-bot/internal/model"
-	
+
 	"go.uber.org/atomic"
 	"go.uber.org/zap"
 )
 
-func init() {
-	task := NewRssTask()
-	task.Register(&telegramBotRssUpdateObserver{})
-	registerTask(task)
-}
+// func init() {
+// 	task := NewRssTask()
+// 	task.Register(&telegramBotRssUpdateObserver{})
+// 	registerTask(task)
+// }
 
 // RssUpdateObserver Rss update observer
 type RssUpdateObserver interface {

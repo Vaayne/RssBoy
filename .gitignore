@@ -253,3 +253,4 @@ flowerss-bot
 
 *.db
 .dockerfile
+data/

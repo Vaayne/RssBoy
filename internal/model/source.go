@@ -18,12 +18,12 @@ import (
 )
 
 type Source struct {
-	ID         uint `gorm:"primary_key;AUTO_INCREMENT"`
-	Link       string
-	Title      string
-	ErrorCount uint
-	Content    []Content
-	EditTime
+	ID         uint      `gorm:"primary_key;AUTO_INCREMENT" json:"id"`
+	Link       string    `json:"link"`
+	Title      string    `json:"title"`
+	ErrorCount uint      `json:"error_count"`
+	Content    []Content `json:"-"`
+	EditTime   `json:"edit_time"`
 }
 
 func (s *Source) appendContents(items []*rss.Item) error {
@@ -150,7 +150,7 @@ func (s *Source) NeedUpdate() bool {
 
 // GetNewContents 获取rss新内容
 func (s *Source) GetNewContents() ([]*Content, error) {
-	zap.S().Debugw("fetch source updates",
+	zap.S().Infow("fetch source updates",
 		"source", s,
 	)
 

@@ -67,6 +67,10 @@ var (
 
 	// PTSites 支持的 PT 站点
 	PTSites map[string]string = map[string]string{}
+
+	// NSQ nsq 相关配置
+	NSQ       NSQConfig = NSQConfig{}
+	EnableNSQ bool      = false
 )
 
 const (
@@ -137,6 +141,16 @@ type PTDownloadDirConfig struct {
 	Default string
 	Movie   string
 	TV      string
+}
+
+type NSQConfig struct {
+	NSQd       NSQHostConfig
+	NSQLookupd NSQHostConfig
+}
+
+type NSQHostConfig struct {
+	Host string
+	Port int32
 }
 
 func AppVersionInfo() (s string) {
