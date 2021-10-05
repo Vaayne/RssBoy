@@ -6,9 +6,9 @@ IMAGE_NAME ?= flowerss
 test:
 	go test ./... -v
 
-build:
-	go build -mod=vendor -o ./bin/$(APP_NAME) ./cmd/$(APP_NAME)/main.go
-	go build -mod=vendor -o ./bin/$(CONSUMER_NAME) ./cmd/$(CONSUMER_NAME)/main.go
+build: get
+	go build -o ./bin/$(APP_NAME) ./cmd/$(APP_NAME)/main.go
+	go build -o ./bin/$(CONSUMER_NAME) ./cmd/$(CONSUMER_NAME)/main.go
 
 get:
 	go mod download
