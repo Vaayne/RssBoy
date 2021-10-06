@@ -15,7 +15,7 @@ func downloadToMoviesCtr(c *tb.Callback) {
 }
 
 func downloadToTVsCtr(c *tb.Callback) {
-	downloadBT(c, config.PTDownloadDir.Movie)
+	downloadBT(c, config.PTDownloadDir.TV)
 }
 
 func downloadCtr(c *tb.Callback) {
