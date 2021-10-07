@@ -11,15 +11,19 @@ require (
 	github.com/hekmon/transmissionrpc v1.1.0
 	github.com/hekmon/transmissionrpc/v2 v2.0.1 // indirect
 	github.com/indes/telegraph-go v1.0.1
-	github.com/jinzhu/gorm v1.9.16
 	github.com/magiconair/properties v1.8.5
-	github.com/mattn/go-sqlite3 v1.14.5 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/spf13/viper v1.9.0
 	github.com/stretchr/testify v1.7.0
 	go.uber.org/atomic v1.9.0
+	go.uber.org/multierr v1.7.0 // indirect
 	go.uber.org/zap v1.19.1
 	golang.org/x/net v0.0.0-20210503060351-7fd8e65b6420
 	gopkg.in/tucnak/telebot.v2 v2.4.0
+	gorm.io/driver/mysql v1.1.2
+	gorm.io/driver/postgres v1.1.2
+	gorm.io/driver/sqlite v1.1.5
+	gorm.io/gorm v1.21.15
 	moul.io/zapgorm v1.1.3
+	moul.io/zapgorm2 v1.1.0 // indirect
 )

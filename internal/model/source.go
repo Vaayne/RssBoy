@@ -13,8 +13,8 @@ import (
 	"github.com/indes/flowerss-bot/internal/util"
 
 	"github.com/SlyMarbo/rss"
-	"github.com/jinzhu/gorm"
 	"go.uber.org/zap"
+	"gorm.io/gorm"
 )
 
 type Source struct {

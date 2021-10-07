@@ -116,7 +116,7 @@ func init() {
 
 	if viper.IsSet("mysql.host") {
 		EnableMysql = true
-		Mysql = MysqlConfig{
+		Mysql = DBConfig{
 			Host:     viper.GetString("mysql.host"),
 			Port:     viper.GetInt("mysql.port"),
 			User:     viper.GetString("mysql.user"),
@@ -126,6 +126,19 @@ func init() {
 	}
 
 	if !EnableMysql {
+		if viper.IsSet("postgreSQL.host") {
+			EnablePostgreSQL = true
+			PostgreSQL = DBConfig{
+				Host:     viper.GetString("postgreSQL.host"),
+				Port:     viper.GetInt("postgreSQL.port"),
+				User:     viper.GetString("postgreSQL.user"),
+				Password: viper.GetString("postgreSQL.password"),
+				DB:       viper.GetString("postgreSQL.database"),
+			}
+		}
+	}
+
+	if !EnableMysql && !EnablePostgreSQL {
 		if viper.IsSet("sqlite.path") {
 			SQLitePath = viper.GetString("sqlite.path")
 		} else {
@@ -292,7 +305,7 @@ func getInt(s string) int {
 	return num
 }
 
-func (m *MysqlConfig) GetMysqlConnectingString() string {
+func (m *DBConfig) GetDBConnectingString() string {
 	usr := m.User
 	pwd := m.Password
 	host := m.Host
