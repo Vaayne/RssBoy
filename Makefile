@@ -16,4 +16,4 @@ clean:
 	rm flowerss-bot
 
 static:
-	staticcheck ./...
+	pre-commit run --all-files

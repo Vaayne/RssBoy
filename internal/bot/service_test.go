@@ -1,10 +1,11 @@
 package bot
 
 import (
+	"testing"
+
 	"github.com/indes/flowerss-bot/internal/config"
 	"github.com/magiconair/properties/assert"
 	tb "gopkg.in/tucnak/telebot.v2"
-	"testing"
 )
 
 // TestGetMentionFromMessage test GetMentionFromMessage
