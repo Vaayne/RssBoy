@@ -27,7 +27,7 @@ var (
 	EnableTelegraph       bool = false
 	PreviewText           int  = 0
 	DisableWebPagePreview bool = false
-	Mysql                 MysqlConfig
+	Mysql                 DBConfig
 	SQLitePath            string
 	EnableMysql           bool = false
 
@@ -67,6 +67,11 @@ var (
 
 	// PTSites 支持的 PT 站点
 	PTSites map[string]string = map[string]string{}
+
+	// EnablePostgreSQL
+	EnablePostgreSQL bool = false
+	// PostgreSQL
+	PostgreSQL DBConfig
 )
 
 const (
@@ -105,8 +110,8 @@ const (
 	ReleaseMode RunType = "Release"
 )
 
-// MysqlConfig mysql 配置
-type MysqlConfig struct {
+// DBConfig mysql 配置
+type DBConfig struct {
 	Host     string
 	Port     int
 	User     string

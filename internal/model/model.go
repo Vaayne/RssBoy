@@ -1,17 +1,23 @@
 package model
 
 import (
+	"database/sql"
 	"time"
 
 	"github.com/indes/flowerss-bot/internal/config"
 	"github.com/indes/flowerss-bot/internal/log"
-
-	"github.com/jinzhu/gorm"
 	"go.uber.org/zap"
-	"moul.io/zapgorm"
+	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+	"moul.io/zapgorm2"
 )
 
-var db *gorm.DB
+var (
+	db    *gorm.DB
+	sqlDB *sql.DB
+)
 
 // InitDB init db object
 func InitDB() {
@@ -21,10 +27,8 @@ func InitDB() {
 }
 
 func configDB() {
-	db.DB().SetMaxIdleConns(10)
-	db.DB().SetMaxOpenConns(50)
-	db.LogMode(config.DBLogMode)
-	db.SetLogger(zapgorm.New(log.Logger.WithOptions(zap.AddCallerSkip(7))))
+	sqlDB.SetMaxIdleConns(10)
+	sqlDB.SetMaxOpenConns(50)
 }
 
 func updateTable() {
@@ -41,26 +45,37 @@ func connectDB() {
 		return
 	}
 
+	logger := zapgorm2.New(log.Logger.WithOptions(zap.AddCallerSkip(7)))
+	gormConfig := &gorm.Config{
+		Logger: logger,
+	}
 	var err error
 	if config.EnableMysql {
-		db, err = gorm.Open("mysql", config.Mysql.GetMysqlConnectingString())
+		db, err = gorm.Open(mysql.Open(config.Mysql.GetMySQLConnectingString()), gormConfig)
+	} else if config.EnablePostgreSQL {
+		db, err = gorm.Open(postgres.Open(config.PostgreSQL.GetPostgreSQLConnectingString()), gormConfig)
 	} else {
-		db, err = gorm.Open("sqlite3", config.SQLitePath)
+		db, err = gorm.Open(sqlite.Open(config.SQLitePath), gormConfig)
 	}
 	if err != nil {
 		zap.S().Fatalf("connect db failed, err: %+v", err)
+	}
+	sqlDB, err = db.DB()
+	if err != nil {
+		zap.S().Fatalf("get sql db failed, err: %+v", err)
 	}
 }
 
 // Disconnect disconnects from the database.
 func Disconnect() {
-	db.Close()
+	sqlDB.Close()
 }
 
 // createOrUpdateTable create table or Migrate table
 func createOrUpdateTable(model interface{}) {
-	if !db.HasTable(model) {
-		db.CreateTable(model)
+
+	if !db.Migrator().HasTable(model) {
+		db.Migrator().CreateTable(model)
 	} else {
 		db.AutoMigrate(model)
 	}

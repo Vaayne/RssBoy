@@ -1,7 +1,10 @@
 package model
 
-import "testing"
-import "github.com/stretchr/testify/assert"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
 
 func Test_ProcessWechatURL(t *testing.T) {
 	assert := assert.New(t)

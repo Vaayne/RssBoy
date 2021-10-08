@@ -6,7 +6,7 @@ import (
 	"go.uber.org/zap"
 )
 
-var client transmissionrpc.Client
+var client *transmissionrpc.Client
 
 func init() {
 	transmissionbt, err := transmissionrpc.New(
@@ -34,7 +34,7 @@ func init() {
 			"user", config.Transmission.User,
 			"https", config.Transmission.Https,
 		)
-		client = *transmissionbt
+		client = transmissionbt
 		checkVersion()
 	}
 }
