@@ -2,7 +2,6 @@ package model
 
 import (
 	"database/sql"
-	"fmt"
 	"time"
 
 	"github.com/indes/flowerss-bot/internal/config"

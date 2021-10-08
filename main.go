@@ -19,8 +19,8 @@ func main() {
 }
 
 func handleSignal() {
-	c := make(chan os.Signal)
-	signal.Notify(c, os.Interrupt, os.Kill, syscall.SIGINT, syscall.SIGQUIT, syscall.SIGTERM)
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM, syscall.SIGINT, syscall.SIGQUIT, syscall.SIGTERM)
 
 	<-c
 

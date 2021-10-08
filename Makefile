@@ -14,3 +14,6 @@ run:
 
 clean:
 	rm flowerss-bot
+
+static:
+	staticcheck ./...
