@@ -2,9 +2,11 @@ package model
 
 import (
 	"database/sql"
+	"fmt"
 	"time"
 
 	"github.com/indes/flowerss-bot/internal/config"
+	"github.com/indes/flowerss-bot/internal/log"
 	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
@@ -43,23 +45,22 @@ func connectDB() {
 	if config.RunMode == config.TestMode {
 		return
 	}
-	logger := zapgorm2.New(zap.L().WithOptions(zap.AddCallerSkip(7)))
+
+	logger := zapgorm2.New(log.Logger.WithOptions(zap.AddCallerSkip(7)))
 	gormConfig := &gorm.Config{
 		Logger: logger,
 	}
-
 	var err error
 	if config.EnableMysql {
-		db, err = gorm.Open(mysql.Open(config.Mysql.GetDBConnectingString()), gormConfig)
+		db, err = gorm.Open(mysql.Open(config.Mysql.GetMySQLConnectingString()), gormConfig)
 	} else if config.EnablePostgreSQL {
-		db, err = gorm.Open(postgres.Open(config.PostgreSQL.GetDBConnectingString()), gormConfig)
+		db, err = gorm.Open(postgres.Open(config.PostgreSQL.GetPostgreSQLConnectingString()), gormConfig)
 	} else {
 		db, err = gorm.Open(sqlite.Open(config.SQLitePath), gormConfig)
 	}
 	if err != nil {
 		zap.S().Fatalf("connect db failed, err: %+v", err)
 	}
-
 	sqlDB, err = db.DB()
 	if err != nil {
 		zap.S().Fatalf("get sql db failed, err: %+v", err)

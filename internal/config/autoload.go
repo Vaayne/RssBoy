@@ -305,13 +305,22 @@ func getInt(s string) int {
 	return num
 }
 
-func (m *DBConfig) GetDBConnectingString() string {
+func (m *DBConfig) GetMySQLConnectingString() string {
 	usr := m.User
 	pwd := m.Password
 	host := m.Host
 	port := m.Port
 	db := m.DB
 	return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=true", usr, pwd, host, port, db)
+}
+
+func (m *DBConfig) GetPostgreSQLConnectingString() string {
+	return fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable TimeZone=Asia/Shanghai",
+		m.Host,
+		m.User,
+		m.Password,
+		m.DB,
+		m.Port)
 }
 
 func isInTests() bool {

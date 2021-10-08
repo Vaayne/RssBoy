@@ -14,6 +14,13 @@ mysql:
   password:
   database:
 
+postgreSQL:
+  host:
+  port:
+  user:
+  password:
+  database:
+
 telegram:
   endpoint:
 

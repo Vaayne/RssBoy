@@ -6,12 +6,9 @@ import (
 	"syscall"
 
 	"github.com/indes/flowerss-bot/internal/bot"
+
 	"github.com/indes/flowerss-bot/internal/model"
 	"github.com/indes/flowerss-bot/internal/task"
-
-	_ "gorm.io/driver/mysql"
-	_ "gorm.io/driver/postgres"
-	_ "gorm.io/driver/sqlite"
 )
 
 func main() {
