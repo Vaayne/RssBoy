@@ -45,7 +45,7 @@ func connectDB() {
 		return
 	}
 
-	logger := zapgorm2.New(log.Logger.WithOptions(zap.AddCallerSkip(7)))
+	logger := zapgorm2.New(log.Logger)
 	gormConfig := &gorm.Config{
 		Logger: logger,
 	}
@@ -53,7 +53,13 @@ func connectDB() {
 	if config.EnableMysql {
 		db, err = gorm.Open(mysql.Open(config.Mysql.GetMySQLConnectingString()), gormConfig)
 	} else if config.EnablePostgreSQL {
-		db, err = gorm.Open(postgres.Open(config.PostgreSQL.GetPostgreSQLConnectingString()), gormConfig)
+		db, err = gorm.Open(
+			postgres.New(postgres.Config{
+				DSN:                  config.PostgreSQL.GetPostgreSQLConnectingString(),
+				PreferSimpleProtocol: true,
+			}),
+			gormConfig,
+		)
 	} else {
 		db, err = gorm.Open(sqlite.Open(config.SQLitePath), gormConfig)
 	}
