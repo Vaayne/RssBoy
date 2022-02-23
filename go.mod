@@ -12,7 +12,7 @@ require (
 	github.com/hekmon/cunits/v2 v2.1.0 // indirect
 	github.com/hekmon/transmissionrpc v1.1.0
 	github.com/indes/telegraph-go v1.0.1
-	github.com/magiconair/properties v1.8.5
+	github.com/magiconair/properties v1.8.6
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/spf13/viper v1.9.0
 	github.com/stretchr/testify v1.7.0
