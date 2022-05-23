@@ -22,8 +22,8 @@ require (
 	golang.org/x/net v0.0.0-20210503060351-7fd8e65b6420
 	gopkg.in/tucnak/telebot.v2 v2.4.0
 	gorm.io/driver/mysql v1.1.2
-	gorm.io/driver/postgres v1.1.2
+	gorm.io/driver/postgres v1.3.6
 	gorm.io/driver/sqlite v1.1.6
-	gorm.io/gorm v1.21.15
+	gorm.io/gorm v1.23.4
 	moul.io/zapgorm2 v1.1.0
 )
