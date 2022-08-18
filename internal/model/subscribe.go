@@ -26,7 +26,7 @@ type Subscribe struct {
 func RegistFeed(userID int64, sourceID uint) error {
 	var subscribe Subscribe
 
-	if err := db.Where("user_id=? and source_id=?", userID, sourceID).Find(&subscribe).Error; err != nil {
+	if err := db.Where("user_id=? and source_id=?", userID, sourceID).First(&subscribe).Error; err != nil {
 		if err.Error() == "record not found" {
 			subscribe.UserID = userID
 			subscribe.SourceID = sourceID

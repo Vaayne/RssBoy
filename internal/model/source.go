@@ -82,7 +82,7 @@ func fetchFunc(url string) (resp *http.Response, err error) {
 func FindOrNewSourceByUrl(url string) (*Source, error) {
 	var source Source
 
-	if err := db.Where("link=?", url).Find(&source).Error; err != nil {
+	if err := db.Where("link=?", url).First(&source).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			source.Link = url
 
