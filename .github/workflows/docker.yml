@@ -1,15 +1,13 @@
 name: Build Docker Image
 
 on:
-  schedule:
-    - cron: '0 10 * * *' # everyday at 10am
   pull_request:
-    branches: master
+    branches: main
   push:
     branches:
-      - master
+      - main
     tags:
-      - v*
+      - v*.*.*
 
 jobs:
   buildx:
